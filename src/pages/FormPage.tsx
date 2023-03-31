@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 type LoginData = {
   username: string;
@@ -19,6 +19,11 @@ const FormPage = () => {
     isError: false,
     isSuccess: false,
   });
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const nam = e.target.name;
+    const val = e.target.value;
+    setData({ ...data, [nam]: val });
+  };
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     localStorage.clear;
@@ -58,27 +63,31 @@ const FormPage = () => {
     >
       <p>Ini adalah halaman Form</p>
 
-      <form className="col-md-3">
+      <form className="col-md-3" onSubmit={submitHandler}>
         <input
           className="form-control"
           type="text"
           name="username"
           placeholder="Username"
+          onChange={changeHandler}
+          value={data.username}
         />
         <input
           className="form-control"
           type="password"
           name="password"
           placeholder="Password"
+          onChange={changeHandler}
+          value={data.password}
         />
         <button className="btn btn-primary" type="submit">
           Lakukan Login
         </button>
       </form>
 
-      <p>Login Berhasil, silahkan cek Local Storage</p>
+      {formState.isSuccess && <p>Login Berhasil, silahkan cek Local Storage</p>}
 
-      <p>Login Gagal</p>
+      {formState.isError && <p>Login Gagal</p>}
     </div>
   );
 };
