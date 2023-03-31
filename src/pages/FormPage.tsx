@@ -23,6 +23,10 @@ const FormPage = () => {
     const nam = e.target.name;
     const val = e.target.value;
     setData({ ...data, [nam]: val });
+    setFormState({
+      isError: false,
+      isSuccess: false,
+    });
   };
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
